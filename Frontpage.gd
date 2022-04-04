@@ -1,14 +1,26 @@
 extends Control
 
 
-onready var Calendar = $MarginContainer/VBoxContainer/HBoxContainer3/VBoxContainer2/ItemList
+onready var Calendar = $MarginContainer/VBoxContainer/HBoxContainer3/VBoxContainer2/Calendar
 
 
 var calendar_padding = 0
 
 
 func _ready():
+	#why are Items "selectable" even when they're "disabled"? what nonsense
+	for index in range(7):
+		Calendar.set_item_selectable(index, false)
+	
+	
 	var time = OS.get_datetime()
+	
+	#messing with the time for testing
+	#time["month"] = 5
+	#time["day"] = 1
+	#time["weekday"] = 7
+	
+	
 	var padding_needed = get_first_weekday(time["day"],time["weekday"]) -1
 	
 	for pad in range(padding_needed):
@@ -18,6 +30,10 @@ func _ready():
 	
 	for excess_days in range(get_number_of_days(time["month"],time["year"]), 31):
 		Calendar.remove_item( Calendar.get_item_count()-1 )
+	
+	var current_index = get_day_index(time["day"])
+	Calendar.select( current_index )
+	Calendar.emit_signal("item_selected", current_index)
 
 
 func get_first_weekday(current_day, current_weekday):
@@ -30,6 +46,12 @@ func get_first_weekday(current_day, current_weekday):
 		if working_weekday == 0:
 			working_weekday = 7
 	return working_weekday
+
+
+func get_day_index(current_day):
+	for index in range( Calendar.get_item_count() ):
+		if int(Calendar.get_item_text(index)) == current_day:
+			return index
 
 
 func get_number_of_days(current_month, current_year):
@@ -65,3 +87,8 @@ func get_number_of_days(current_month, current_year):
 			return 30
 		12:
 			return 31
+
+
+func _on_Calendar_item_selected(index):
+	if Calendar.is_item_selectable(index):
+		print(index)
