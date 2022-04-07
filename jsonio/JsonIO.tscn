@@ -1,0 +1,17 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://jsonio/JsonIO.gd" type="Script" id=1]
+
+[node name="JsonIO" type="Node"]
+script = ExtResource( 1 )
+
+[node name="ConfirmationDialog" type="ConfirmationDialog" parent="."]
+visible = true
+margin_right = 200.0
+margin_bottom = 70.0
+window_title = "File exists, overwrite?"
+
+[node name="AcceptDialog" type="AcceptDialog" parent="."]
+visible = true
+margin_right = 83.0
+margin_bottom = 58.0
