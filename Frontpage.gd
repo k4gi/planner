@@ -1,7 +1,14 @@
 extends Control
 
 
+onready var JsonIO = $JsonIO
 onready var Calendar = $MarginContainer/VBoxContainer/HBoxContainer3/VBoxContainer2/Calendar
+
+
+var selected_year = 2022
+var selected_month = 4
+var selected_day = 16
+var selected_filename = ""
 
 
 var calendar_padding = 0
@@ -33,7 +40,7 @@ func _ready():
 	
 	var current_index = get_day_index(time["day"])
 	Calendar.select( current_index )
-	Calendar.emit_signal("item_selected", current_index)
+	Calendar.emit_signal("item_selected", current_index) #doesn't happen with select()
 
 
 func get_first_weekday(current_day, current_weekday):
@@ -54,7 +61,7 @@ func get_day_index(current_day):
 			return index
 
 
-func get_number_of_days(current_month, current_year):
+func get_number_of_days(current_month, current_year): #30 days hath september...
 	match current_month:
 		1:
 			return 31
@@ -91,4 +98,6 @@ func get_number_of_days(current_month, current_year):
 
 func _on_Calendar_item_selected(index):
 	if Calendar.is_item_selectable(index):
-		print(index)
+		selected_day = Calendar.get_item_text(index)
+		selected_filename = "%04s-%02s-%02s.json" % [selected_year, selected_month, selected_day]
+		JsonIO.load_json_file(selected_filename)
