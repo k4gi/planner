@@ -3,6 +3,7 @@ extends Control
 
 onready var JsonIO = $JsonIO
 onready var Calendar = $Margin/VBox/HBoxBody/VBoxLeft/Calendar
+onready var ChangeStar = $Margin/VBox/HBoxHeader/ChangeStar
 
 
 var selected_year = 2022
@@ -10,8 +11,10 @@ var selected_month = 04
 var selected_day = 16
 var selected_filename = ""
 
+var has_file_changed = false
 
-var calendar_padding = 0
+
+var calendar_padding = 0 # this isn't used for anything? what was i thinking
 
 
 func _ready():
@@ -96,8 +99,20 @@ func get_number_of_days(current_month, current_year): #30 days hath september...
 			return 31
 
 
+func set_file_changed():
+	has_file_changed = true
+	ChangeStar.set_visible(true)
+
 func _on_Calendar_item_selected(index):
 	if Calendar.is_item_selectable(index):
 		selected_day = int(Calendar.get_item_text(index))
 		selected_filename = "%04d-%02d-%02d.json" % [selected_year, selected_month, selected_day]
 		JsonIO.load_json_file(selected_filename)
+
+
+func _on_ReminderCheck_toggled(button_pressed):
+	set_file_changed()
+
+
+func _on_NoteEditor_text_changed():
+	set_file_changed()

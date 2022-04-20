@@ -52,6 +52,15 @@ margin_right = 489.0
 margin_bottom = 24.0
 text = "17:18"
 
+[node name="ChangeStar" type="Label" parent="Margin/VBox/HBoxHeader"]
+visible = false
+self_modulate = Color( 1, 0.380392, 0.380392, 1 )
+margin_left = 747.0
+margin_right = 924.0
+margin_bottom = 24.0
+size_flags_horizontal = 10
+text = "*unsaved changes"
+
 [node name="HBoxContainer2" type="HBoxContainer" parent="Margin/VBox"]
 visible = false
 margin_top = 40.0
@@ -124,7 +133,7 @@ size_flags_vertical = 3
 margin_right = 135.0
 margin_bottom = 32.0
 
-[node name="CheckBox" type="CheckBox" parent="Margin/VBox/HBoxBody/VBoxLeft/Scroll/VBoxReminders"]
+[node name="ReminderCheck" type="CheckBox" parent="Margin/VBox/HBoxBody/VBoxLeft/Scroll/VBoxReminders"]
 margin_right = 135.0
 margin_bottom = 32.0
 text = "medication"
@@ -159,7 +168,7 @@ margin_right = 502.0
 margin_bottom = 24.0
 text = "What's the current dev project? How's that going?"
 
-[node name="TextEdit" type="TextEdit" parent="Margin/VBox/HBoxBody/VBoxCentre"]
+[node name="NoteEditor" type="TextEdit" parent="Margin/VBox/HBoxBody/VBoxCentre"]
 margin_top = 28.0
 margin_right = 308.0
 margin_bottom = 414.0
@@ -212,3 +221,5 @@ size_flags_horizontal = 6
 text = "Save"
 
 [connection signal="item_selected" from="Margin/VBox/HBoxBody/VBoxLeft/Calendar" to="." method="_on_Calendar_item_selected"]
+[connection signal="toggled" from="Margin/VBox/HBoxBody/VBoxLeft/Scroll/VBoxReminders/ReminderCheck" to="." method="_on_ReminderCheck_toggled"]
+[connection signal="text_changed" from="Margin/VBox/HBoxBody/VBoxCentre/NoteEditor" to="." method="_on_NoteEditor_text_changed"]
