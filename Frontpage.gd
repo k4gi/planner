@@ -2,7 +2,7 @@ extends Control
 
 
 onready var JsonIO = $JsonIO
-onready var Calendar = $MarginContainer/VBoxContainer/HBoxContainer3/VBoxContainer2/Calendar
+onready var Calendar = $Margin/VBox/HBoxBody/VBoxLeft/Calendar
 
 
 var selected_year = 2022
