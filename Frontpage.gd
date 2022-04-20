@@ -6,7 +6,7 @@ onready var Calendar = $MarginContainer/VBoxContainer/HBoxContainer3/VBoxContain
 
 
 var selected_year = 2022
-var selected_month = 4
+var selected_month = 04
 var selected_day = 16
 var selected_filename = ""
 
@@ -98,6 +98,6 @@ func get_number_of_days(current_month, current_year): #30 days hath september...
 
 func _on_Calendar_item_selected(index):
 	if Calendar.is_item_selectable(index):
-		selected_day = Calendar.get_item_text(index)
-		selected_filename = "%04s-%02s-%02s.json" % [selected_year, selected_month, selected_day]
+		selected_day = int(Calendar.get_item_text(index))
+		selected_filename = "%04d-%02d-%02d.json" % [selected_year, selected_month, selected_day]
 		JsonIO.load_json_file(selected_filename)
