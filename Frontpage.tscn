@@ -223,3 +223,4 @@ text = "Save"
 [connection signal="item_selected" from="Margin/VBox/HBoxBody/VBoxLeft/Calendar" to="." method="_on_Calendar_item_selected"]
 [connection signal="toggled" from="Margin/VBox/HBoxBody/VBoxLeft/Scroll/VBoxReminders/ReminderCheck" to="." method="_on_ReminderCheck_toggled"]
 [connection signal="text_changed" from="Margin/VBox/HBoxBody/VBoxCentre/NoteEditor" to="." method="_on_NoteEditor_text_changed"]
+[connection signal="pressed" from="Margin/VBox/HBoxFooter/ButtonSave" to="." method="_on_ButtonSave_pressed"]

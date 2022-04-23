@@ -4,6 +4,7 @@ extends Control
 onready var JsonIO = $JsonIO
 onready var Calendar = $Margin/VBox/HBoxBody/VBoxLeft/Calendar
 onready var ChangeStar = $Margin/VBox/HBoxHeader/ChangeStar
+onready var NoteEditor = $Margin/VBox/HBoxBody/VBoxCentre/NoteEditor
 
 
 var selected_year = 2022
@@ -103,6 +104,7 @@ func set_file_changed():
 	has_file_changed = true
 	ChangeStar.set_visible(true)
 
+
 func _on_Calendar_item_selected(index):
 	if Calendar.is_item_selectable(index):
 		selected_day = int(Calendar.get_item_text(index))
@@ -116,3 +118,22 @@ func _on_ReminderCheck_toggled(button_pressed):
 
 func _on_NoteEditor_text_changed():
 	set_file_changed()
+
+
+func _on_ButtonSave_pressed():
+	#sooo...
+	#maybe a confirmation popup goes here and then
+	save_data()
+
+
+func save_data():
+	var data = {
+		"year": selected_year,
+		"month": selected_month,
+		"day": selected_day,
+		"notes": NoteEditor.get_text(),
+		"events": null,
+		"reminders": null
+	}
+	
+	JsonIO.save_json_file(selected_filename, data)
