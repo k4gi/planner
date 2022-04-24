@@ -109,7 +109,22 @@ func _on_Calendar_item_selected(index):
 	if Calendar.is_item_selectable(index):
 		selected_day = int(Calendar.get_item_text(index))
 		selected_filename = "user://%04d-%02d-%02d.json" % [selected_year, selected_month, selected_day]
-		JsonIO.load_json_file(selected_filename)
+		
+		load_data()
+
+
+func load_data():
+	var data = JsonIO.load_json_file(selected_filename)
+	if typeof(data) == TYPE_INT:
+		if data == 1:
+			#uh oh. something's wrong with the save file
+			pass
+		elif data == -1:
+			#no existing file. that's probably fine
+			NoteEditor.set_text("")
+	else:
+		#data is a dictionary, yay
+		NoteEditor.set_text( data["notes"] )
 
 
 func _on_ReminderCheck_toggled(button_pressed):
@@ -123,7 +138,10 @@ func _on_NoteEditor_text_changed():
 func _on_ButtonSave_pressed():
 	#sooo...
 	#maybe a confirmation popup goes here and then
-	save_data()
+	if has_file_changed:
+		save_data()
+		has_file_changed = false
+		ChangeStar.set_visible(false)
 
 
 func save_data():
