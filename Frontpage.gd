@@ -108,7 +108,7 @@ func set_file_changed():
 func _on_Calendar_item_selected(index):
 	if Calendar.is_item_selectable(index):
 		selected_day = int(Calendar.get_item_text(index))
-		selected_filename = "%04d-%02d-%02d.json" % [selected_year, selected_month, selected_day]
+		selected_filename = "user://%04d-%02d-%02d.json" % [selected_year, selected_month, selected_day]
 		JsonIO.load_json_file(selected_filename)
 
 
