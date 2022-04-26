@@ -130,12 +130,28 @@ margin_bottom = 414.0
 size_flags_vertical = 3
 
 [node name="VBoxReminders" type="VBoxContainer" parent="Margin/VBox/HBoxBody/VBoxLeft/Scroll"]
-margin_right = 135.0
-margin_bottom = 32.0
+margin_right = 300.0
+margin_bottom = 144.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
 
-[node name="ReminderCheck" type="CheckBox" parent="Margin/VBox/HBoxBody/VBoxLeft/Scroll/VBoxReminders"]
-margin_right = 135.0
+[node name="HBox" type="HBoxContainer" parent="Margin/VBox/HBoxBody/VBoxLeft/Scroll/VBoxReminders"]
+margin_right = 300.0
 margin_bottom = 32.0
+size_flags_horizontal = 3
+
+[node name="Delete" type="Button" parent="Margin/VBox/HBoxBody/VBoxLeft/Scroll/VBoxReminders/HBox"]
+margin_right = 23.0
+margin_bottom = 30.0
+size_flags_horizontal = 0
+size_flags_vertical = 0
+text = "x"
+
+[node name="ReminderCheck" type="CheckBox" parent="Margin/VBox/HBoxBody/VBoxLeft/Scroll/VBoxReminders/HBox"]
+margin_left = 27.0
+margin_right = 300.0
+margin_bottom = 32.0
+size_flags_horizontal = 3
 text = "medication"
 
 [node name="VBoxCentre" type="VBoxContainer" parent="Margin/VBox/HBoxBody"]
@@ -214,6 +230,13 @@ margin_top = 470.0
 margin_right = 924.0
 margin_bottom = 500.0
 
+[node name="ButtonNewReminder" type="Button" parent="Margin/VBox/HBoxFooter"]
+margin_left = 80.0
+margin_right = 224.0
+margin_bottom = 30.0
+size_flags_horizontal = 6
+text = "new reminder"
+
 [node name="ButtonSave" type="Button" parent="Margin/VBox/HBoxFooter"]
 margin_left = 431.0
 margin_right = 492.0
@@ -221,7 +244,14 @@ margin_bottom = 30.0
 size_flags_horizontal = 6
 text = "Save"
 
+[node name="ButtonNewEvent" type="Button" parent="Margin/VBox/HBoxFooter"]
+margin_left = 712.0
+margin_right = 830.0
+margin_bottom = 30.0
+size_flags_horizontal = 6
+text = "new event"
+
 [connection signal="item_selected" from="Margin/VBox/HBoxBody/VBoxLeft/Calendar" to="." method="_on_Calendar_item_selected"]
-[connection signal="toggled" from="Margin/VBox/HBoxBody/VBoxLeft/Scroll/VBoxReminders/ReminderCheck" to="." method="_on_ReminderCheck_toggled"]
+[connection signal="toggled" from="Margin/VBox/HBoxBody/VBoxLeft/Scroll/VBoxReminders/HBox/ReminderCheck" to="." method="_on_ReminderCheck_toggled"]
 [connection signal="text_changed" from="Margin/VBox/HBoxBody/VBoxCentre/NoteEditor" to="." method="_on_NoteEditor_text_changed"]
 [connection signal="pressed" from="Margin/VBox/HBoxFooter/ButtonSave" to="." method="_on_ButtonSave_pressed"]
