@@ -1,10 +1,14 @@
 extends Control
 
 
+const REMINDER = preload("res://instance/ReminderInstance.tscn")
+
+
 onready var JsonIO = $JsonIO
 onready var Calendar = $Margin/VBox/HBoxBody/VBoxLeft/Calendar
 onready var ChangeStar = $Margin/VBox/HBoxHeader/ChangeStar
 onready var NoteEditor = $Margin/VBox/HBoxBody/VBoxCentre/NoteEditor
+onready var VBoxReminders = $Margin/VBox/HBoxBody/VBoxLeft/Scroll/VBoxReminders
 
 
 var selected_year = 2022
@@ -127,8 +131,8 @@ func load_data():
 		NoteEditor.set_text( data["notes"] )
 
 
-func _on_ReminderCheck_toggled(button_pressed):
-	set_file_changed()
+func _on_ReminderInstance_ReminderCheck_toggled(text, button_pressed):
+	save_reminder_data(text, button_pressed)
 
 
 func _on_NoteEditor_text_changed():
@@ -139,19 +143,72 @@ func _on_ButtonSave_pressed():
 	#sooo...
 	#maybe a confirmation popup goes here and then
 	if has_file_changed:
-		save_data()
+		save_notes_data()
 		has_file_changed = false
 		ChangeStar.set_visible(false)
 
 
-func save_data():
-	var data = {
-		"year": selected_year,
-		"month": selected_month,
-		"day": selected_day,
-		"notes": NoteEditor.get_text(),
-		"events": null,
-		"reminders": null
-	}
+func save_notes_data():
+#	var data = {
+#		"year": selected_year,
+#		"month": selected_month,
+#		"day": selected_day,
+#		"notes": NoteEditor.get_text(),
+#		"events": null,
+#		"reminders": null
+#	}
+	var data = JsonIO.load_json_file(selected_filename)
+	if typeof(data) == TYPE_INT:
+		#something has gone horribly wrong
+		pass
+	else:
+		data["notes"] = NoteEditor.get_text()
+		JsonIO.save_json_file(selected_filename, data)
+
+
+func new_reminder(text):
+	var data = JsonIO.load_json_file(selected_filename)
+	if typeof(data) == TYPE_INT:
+		#something has gone horribly wrong
+		pass
+	else:
+		if data["reminders"].has(text):
+			#already a reminder by this name
+			pass
+		else:
+			var new = REMINDER.instance()
+			new.set_text(text)
+			new.connect("ReminderCheck_toggled", self, "_on_ReminderInstance_ReminderCheck_toggled")
+			new.connect("Delete_pressed", self, "_on_ReminderInstance_Delete_pressed")
+			VBoxReminders.add_child(new)
+			
+			data["reminders"][text] = false
+			JsonIO.save_json_file(selected_filename, data)
+
+
+func save_reminder_data(reminder_text, reminder_state):
+	var data = JsonIO.load_json_file(selected_filename)
+	if typeof(data) == TYPE_INT:
+		#something has gone horribly wrong
+		pass
+	else:
+		data["reminders"][reminder_text] = reminder_state
+		JsonIO.save_json_file(selected_filename, data)
+
+
+func _on_ReminderInstance_Delete_pressed(text):
+	for each_child in VBoxReminders.get_children():
+		if each_child.get_text() == text:
+			each_child.queue_free()
+			delete_reminder_data(text)
+
+
+func delete_reminder_data(text):
+	var data = JsonIO.load_json_file(selected_filename)
+	if typeof(data) == TYPE_INT:
+		#something has gone horribly wrong
+		pass
+	else:
+		data["reminders"].erase(text)
+		JsonIO.save_json_file(selected_filename, data)
 	
-	JsonIO.save_json_file(selected_filename, data)
