@@ -9,6 +9,8 @@ onready var Calendar = $Margin/VBox/HBoxBody/VBoxLeft/Calendar
 onready var ChangeStar = $Margin/VBox/HBoxHeader/ChangeStar
 onready var NoteEditor = $Margin/VBox/HBoxBody/VBoxCentre/NoteEditor
 onready var VBoxReminders = $Margin/VBox/HBoxBody/VBoxLeft/Scroll/VBoxReminders
+onready var DateDisplay = $Margin/VBox/HBoxHeader/DateDisplay
+onready var TimeDisplay = $Margin/VBox/HBoxHeader/TimeDisplay
 
 
 var selected_year = 2022
@@ -103,6 +105,16 @@ func get_number_of_days(current_month, current_year): #30 days hath september...
 		12:
 			return 31
 
+
+func _process(_delta):
+	show_current_time()
+
+
+func show_current_time():
+	var time = OS.get_datetime()
+	
+	DateDisplay.set_text("%04d-%02d-%02d" % [time["year"], time["month"], time["day"]])
+	TimeDisplay.set_text("%02d:%02d:%02d" % [time["hour"], time["minute"], time["second"]])
 
 func set_file_changed():
 	has_file_changed = true

@@ -34,7 +34,7 @@ margin_right = 155.0
 margin_bottom = 24.0
 text = "Today's Date is "
 
-[node name="Label2" type="Label" parent="Margin/VBox/HBoxHeader"]
+[node name="DateDisplay" type="Label" parent="Margin/VBox/HBoxHeader"]
 margin_left = 159.0
 margin_right = 281.0
 margin_bottom = 24.0
@@ -46,7 +46,7 @@ margin_right = 443.0
 margin_bottom = 24.0
 text = " and the time is "
 
-[node name="Label4" type="Label" parent="Margin/VBox/HBoxHeader"]
+[node name="TimeDisplay" type="Label" parent="Margin/VBox/HBoxHeader"]
 margin_left = 447.0
 margin_right = 489.0
 margin_bottom = 24.0
