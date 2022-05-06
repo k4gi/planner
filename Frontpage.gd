@@ -112,9 +112,9 @@ func _process(_delta):
 
 func show_current_time():
 	var time = OS.get_datetime()
-	
 	DateDisplay.set_text("%04d-%02d-%02d" % [time["year"], time["month"], time["day"]])
 	TimeDisplay.set_text("%02d:%02d:%02d" % [time["hour"], time["minute"], time["second"]])
+
 
 func set_file_changed():
 	has_file_changed = true
